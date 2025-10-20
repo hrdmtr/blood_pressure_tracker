@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="簡単で使いやすい血圧記録アプリケーション">
+    <meta name="theme-color" content="#4a90e2">
+    <title>血圧トラッカー</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🩺 血圧トラッカー</h1>
+            <p class="subtitle">簡単に血圧を記録・管理</p>
+        </header>
+
+        <main>
+            <!-- Tab Navigation -->
+            <div class="tabs">
+                <button class="tab active" data-tab="record">記録</button>
+                <button class="tab" data-tab="history">履歴</button>
+                <button class="tab" data-tab="graph">グラフ</button>
+            </div>
+
+            <!-- Record Tab -->
+            <div class="tab-content active" id="record-tab">
+                <div class="card">
+                    <h2>血圧を記録</h2>
+                    
+                    <!-- Camera Section -->
+                    <div class="camera-section">
+                        <button id="camera-btn" class="btn btn-primary">
+                            📷 血圧計の写真を撮る
+                        </button>
+                        <div id="camera-preview" class="camera-preview hidden">
+                            <video id="video" autoplay playsinline></video>
+                            <button id="capture-btn" class="btn btn-secondary">撮影</button>
+                            <button id="cancel-camera-btn" class="btn btn-cancel">キャンセル</button>
+                        </div>
+                        <div id="captured-image" class="captured-image hidden">
+                            <img id="photo" alt="撮影した写真">
+                            <button id="retake-btn" class="btn btn-secondary">撮り直す</button>
+                        </div>
+                    </div>
+
+                    <!-- Manual Input Form -->
+                    <form id="bp-form" class="bp-form">
+                        <div class="form-group">
+                            <label for="systolic">最高血圧 (mmHg)</label>
+                            <input type="number" id="systolic" name="systolic" required min="70" max="250" placeholder="例: 120">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="diastolic">最低血圧 (mmHg)</label>
+                            <input type="number" id="diastolic" name="diastolic" required min="40" max="150" placeholder="例: 80">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pulse">脈拍 (bpm)</label>
+                            <input type="number" id="pulse" name="pulse" min="40" max="200" placeholder="例: 72">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="datetime">測定日時</label>
+                            <input type="datetime-local" id="datetime" name="datetime" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="notes">メモ（任意）</label>
+                            <textarea id="notes" name="notes" rows="3" placeholder="体調や気になることを記入"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-success">保存</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- History Tab -->
+            <div class="tab-content" id="history-tab">
+                <div class="card">
+                    <h2>測定履歴</h2>
+                    <div class="filter-section">
+                        <label for="filter-period">期間:</label>
+                        <select id="filter-period">
+                            <option value="all">すべて</option>
+                            <option value="7">過去7日間</option>
+                            <option value="30">過去30日間</option>
+                            <option value="90">過去90日間</option>
+                        </select>
+                    </div>
+                    <div id="history-list" class="history-list">
+                        <p class="empty-state">まだ記録がありません</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Graph Tab -->
+            <div class="tab-content" id="graph-tab">
+                <div class="card">
+                    <h2>血圧の推移</h2>
+                    <div class="graph-controls">
+                        <label for="graph-period">表示期間:</label>
+                        <select id="graph-period">
+                            <option value="7">過去7日間</option>
+                            <option value="30" selected>過去30日間</option>
+                            <option value="90">過去90日間</option>
+                            <option value="all">すべて</option>
+                        </select>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="bp-chart"></canvas>
+                    </div>
+                    <div id="no-data-message" class="empty-state hidden">
+                        データがありません。まず血圧を記録してください。
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 血圧トラッカー</p>
+        </footer>
+    </div>
+
+    <!-- Delete Confirmation Modal -->
+    <div id="delete-modal" class="modal hidden">
+        <div class="modal-content">
+            <h3>確認</h3>
+            <p>この記録を削除してもよろしいですか？</p>
+            <div class="modal-actions">
+                <button id="confirm-delete" class="btn btn-danger">削除</button>
+                <button id="cancel-delete" class="btn btn-secondary">キャンセル</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
