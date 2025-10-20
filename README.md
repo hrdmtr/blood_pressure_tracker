@@ -1,16 +1,35 @@
-# blood_pressure_tracker
+# Blood Pressure Tracker
 
-A new Flutter project.
+A Flutter application for tracking and monitoring blood pressure readings.
+
+## Features
+
+- Record blood pressure measurements (systolic, diastolic, pulse)
+- View historical data
+- Visualize trends with charts
+- Cross-platform support (iOS, Android, Web, Desktop)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+### Prerequisites
+- Flutter SDK
+- Dart SDK
 
-A few resources to get you started if this is your first Flutter project:
+### Installation
+```bash
+flutter pub get
+flutter run
+```
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## Development
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Run tests
+```bash
+flutter test
+```
+
+### Build for release
+```bash
+flutter build apk  # Android
+flutter build ios  # iOS
+```
